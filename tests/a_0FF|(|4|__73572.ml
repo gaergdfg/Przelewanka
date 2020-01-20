@@ -134,9 +134,9 @@ let () =
   )) 11;
 
   (* ogromna przestrzen, ale maly wynik *)
-  (* test 404 (Array.init 35 (fun i ->
+  test 404 (Array.init 35 (fun i ->
     (i * i * i * i * i, if i = 25 then 20 * 20 * 20 * 20 * 20 else 0))
-  ) 2; *)
+  ) 2;
   (* parami nwd nie 1, ale w sumie juz tak *)
   test 405 [|(6, 6); (10, 3); (15, 14)|] 12;
 
@@ -169,16 +169,16 @@ let () =
   Printf.printf("Testy bonusowe\n");
   (* testy optymalizacji na -1, sprawdzanie nwd *)
   test 501 [|(20, 10); (18, 18); (16, 10); (14, 7)|] (~-1);
-  (* test 502 (Array.init 1000 (fun i ->
+  test 502 (Array.init 1000 (fun i ->
     if i = 500 then
       (2 * i, 315)
     else
       (2 * i, 2 * i)
-  )) (~-1); *)
+  )) (~-1);
 
   (* testy optymalizacji "choc jeden pelny/pusty" *)
   test 601 [|(20, 19); (18, 13); (15, 12); (10, 1)|] (~-1);
-  (* test 602 (Array.init 1000 (fun i -> (i + 2, i / 2 + 1))) (~-1); *)
+  test 602 (Array.init 1000 (fun i -> (i + 2, i / 2 + 1))) (~-1);
 
   Printf.printf "\n";
   if !bad = 0 then begin
