@@ -26,14 +26,12 @@ let check_for_full_or_empty goal volume =
 (** determines whether the problem can be solved based on the input arrays *)
 let is_solvable goal volume =
 	if (Array.length !volume) = 0 then true else
-		let gcd_of_all = ref !volume.(0) in
+		let gcd_of_all = List.fold_left (fun acc x -> gcd (get_maxmin acc x))
+			!volume.(0) (Array.to_list !volume) in
 		let res = ref (check_for_full_or_empty goal volume) in
-		for i = 1 to (Array.length !volume) - 1 do
-			gcd_of_all := gcd (get_maxmin !gcd_of_all !volume.(i))
-		done;
-		if !gcd_of_all = 0 then true else begin
+		if gcd_of_all = 0 then true else begin
 			for i = 0 to (Array.length !goal) - 1 do
-				if !goal.(i) mod !gcd_of_all <> 0 then res := false
+				if !goal.(i) mod gcd_of_all <> 0 then res := false
 			done;
 			!res
 		end
