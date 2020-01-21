@@ -2,6 +2,13 @@
 let rec gcd (a, b) = if b = 0 then a else gcd (b, (a mod b))
 
 
+(** removes cups with (volume = 0) from the array *)
+let remove_zeros arr = 
+	let copy = Array.to_list arr in
+	let no_zeros = List.filter (fun (vol, _) -> vol <> 0) copy in
+	Array.of_list no_zeros
+
+
 (** returns a pair containing (max(a, b), min(a, b)) *)
 let get_maxmin a b = if compare a b >= 0 then (a, b) else (b, a)
 
@@ -102,7 +109,8 @@ let transfer_each move cost queue volume curr =
 (** przelewanka [arr] - 
 	returns the minimum number of moves required to achieve state described
 	in [arr] with the volume limits described in [arr] *)
-let przelewanka arr = 
+let przelewanka arr =
+	let arr = remove_zeros arr in
 	let volume = ref (Array.init (Array.length arr) (fun i -> fst arr.(i))) in
 	let goal = ref (Array.init (Array.length arr) (fun i -> snd arr.(i))) in
 	let start = ref (Array.make (Array.length arr) 0) in
